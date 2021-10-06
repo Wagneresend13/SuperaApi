@@ -1,4 +1,4 @@
-package com.example.algamoney.api.Model;
+package com.example.supera.api.ProductModel;
 
 import java.math.BigDecimal;
 
@@ -8,10 +8,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
+
 @Entity
 @Table(name = "product")
 public class Product {
-
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -84,7 +87,6 @@ public class Product {
 			return false;
 		return true;
 	}
-	
-	
 
+	
 }
