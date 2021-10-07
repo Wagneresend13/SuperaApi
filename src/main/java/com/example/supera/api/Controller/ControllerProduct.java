@@ -13,11 +13,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.supera.api.Constantes.Constantes;
+import com.example.supera.api.Exception.TratativaException;
 import com.example.supera.api.ProductModel.Product;
 import com.example.supera.api.ProductRepository.ProductRepository;
+import com.example.supera.api.Resposta.Resposta;
+import com.example.supera.api.Service.ProdutoService;
 
 @RestController
 @RequestMapping("/produtos")
@@ -26,10 +31,21 @@ public class ControllerProduct {
 	@Autowired
 	private ProductRepository productRepository;
 
+	@Autowired
+	private ProdutoService produtoService;
+
 	// Request para buscar todos os produtos do Banco
 	@GetMapping
-	public List<Product> listarProdutos() {
-		return productRepository.findAll();
+	public @ResponseBody Resposta consultarTodos() {
+		Resposta resposta = new Resposta();
+		try {
+			resposta.setCodigo(Constantes.Status.CÓDIGO_SUCESSO);
+			resposta.setResposta(produtoService.buscarTodos());
+		} catch (TratativaException e) {
+			resposta.setCodigo(Constantes.Status.CÓDIGO_ERRO);
+			resposta.setMensagem(e.getMensagem());
+		}
+		return resposta;
 	}
 
 	// Request para buscar os produtos por ID
