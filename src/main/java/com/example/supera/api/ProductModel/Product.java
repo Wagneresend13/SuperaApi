@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "product")
-public class Product {
+public class Product implements Comparable<Product> {
 	
 	
 	@Id
@@ -86,6 +86,12 @@ public class Product {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(Product product01) {
+		
+		return (int) (this.price - product01.getPrice());
 	}
 
 	

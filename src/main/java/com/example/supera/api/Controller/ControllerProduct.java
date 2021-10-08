@@ -68,5 +68,18 @@ public class ControllerProduct {
 	public void removerProduto(@PathVariable Long id) {
 		productRepository.deleteById(id);
 	}
+	
+	@GetMapping("/ordemPrice/{OrdemPrice}")
+	public @ResponseBody Resposta ordemporPreco() {
+		Resposta resposta = new Resposta();
+		try {
+			resposta.setCodigo(Constantes.Status.CÓDIGO_SUCESSO);
+			resposta.setResposta(produtoService.ordenandoOrdemAlfabetica());
+		} catch (TratativaException e) {
+			resposta.setCodigo(Constantes.Status.CÓDIGO_ERRO);
+			resposta.setMensagem(e.getMensagem());
+		}
+		return resposta;
+	}
 
 }

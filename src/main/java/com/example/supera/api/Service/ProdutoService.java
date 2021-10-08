@@ -1,6 +1,8 @@
 package com.example.supera.api.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -55,4 +57,19 @@ public class ProdutoService {
 			throw new TratativaException("Produto Erro COnsulta", null);
 		}
 	}
+
+	
+	public List<Product> ordenandoOrdemAlfabetica() throws TratativaException {
+
+		List<Product> produtosOrdemAlfabetica = new ArrayList<Product>();
+		Iterable<Product> it = productRepository.findAll();
+		for (Product produto : it) {
+			produtosOrdemAlfabetica.add(produto);
+		}
+		
+		Collections.sort(produtosOrdemAlfabetica);
+
+		return produtosOrdemAlfabetica;
+	}
+
 }
