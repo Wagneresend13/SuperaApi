@@ -1,16 +1,18 @@
-package com.example.supera.api.Resposta;
+package com.example.supera.api.resposta;
 
-import com.example.supera.api.Constantes.Constantes;
+import com.example.supera.api.constants.Constantes;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-public class Resposta {
+public class Resposta  {
 
 	private Integer codigo;
 
 	@JsonInclude(Include.NON_NULL)
 	private String mensagem;
-
+	
+	
+	
 	@JsonInclude(Include.NON_NULL)
 	private Object resposta;
 
@@ -42,5 +44,9 @@ public class Resposta {
 	public void setResposta(Object resposta) {
 		this.resposta = resposta;
 	}
+
+	
+	
+	
 
 }

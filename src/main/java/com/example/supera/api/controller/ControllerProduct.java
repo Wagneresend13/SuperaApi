@@ -1,4 +1,4 @@
-package com.example.supera.api.Controller;
+package com.example.supera.api.controller;
 
 import java.util.List;
 
@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.supera.api.Constantes.Constantes;
-import com.example.supera.api.Exception.TratativaException;
-import com.example.supera.api.ProductModel.Product;
-import com.example.supera.api.ProductRepository.ProductRepository;
-import com.example.supera.api.Resposta.Resposta;
-import com.example.supera.api.Service.ProdutoService;
+import com.example.supera.api.constants.Constantes;
+import com.example.supera.api.exception.TratativaException;
+import com.example.supera.api.model.Product;
+import com.example.supera.api.productRepository.ProductRepository;
+import com.example.supera.api.resposta.Resposta;
+import com.example.supera.api.service.ProdutoService;
 
 @RestController
 @RequestMapping("/produtos")
@@ -74,7 +74,33 @@ public class ControllerProduct {
 		Resposta resposta = new Resposta();
 		try {
 			resposta.setCodigo(Constantes.Status.CÓDIGO_SUCESSO);
-			resposta.setResposta(produtoService.ordenandoOrdemAlfabetica());
+			resposta.setResposta(produtoService.ordenandoPorPreco());
+		} catch (TratativaException e) {
+			resposta.setCodigo(Constantes.Status.CÓDIGO_ERRO);
+			resposta.setMensagem(e.getMensagem());
+		}
+		return resposta;
+	}
+	
+	@GetMapping("/ordemAlfabetica/{ordemAlfabetica}")
+	public @ResponseBody Resposta ordenarBuscaPornome() {
+		Resposta resposta = new Resposta();
+		try {
+			resposta.setCodigo(Constantes.Status.CÓDIGO_SUCESSO);
+			resposta.setResposta(produtoService.OrdenarBuscaPornome());
+		} catch (TratativaException e) {
+			resposta.setCodigo(Constantes.Status.CÓDIGO_ERRO);
+			resposta.setMensagem(e.getMensagem());
+		}
+		return resposta;
+	}
+	
+	@GetMapping("/ordemScore/{ordemScore}")
+	public @ResponseBody Resposta ordenarPorScore() {
+		Resposta resposta = new Resposta();
+		try {
+			resposta.setCodigo(Constantes.Status.CÓDIGO_SUCESSO);
+			resposta.setResposta(produtoService.ordenarPorScore());
 		} catch (TratativaException e) {
 			resposta.setCodigo(Constantes.Status.CÓDIGO_ERRO);
 			resposta.setMensagem(e.getMensagem());

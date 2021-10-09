@@ -1,4 +1,4 @@
-package com.example.supera.api.ProductModel;
+package com.example.supera.api.model;
 
 import java.math.BigDecimal;
 
@@ -93,6 +93,7 @@ public class Product implements Comparable<Product> {
 		
 		return (int) (this.price - product01.getPrice());
 	}
-
+	
+	
 	
 }

@@ -1,25 +1,30 @@
-package com.example.supera.api.Service;
+package com.example.supera.api.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.supera.api.Exception.TratativaException;
-import com.example.supera.api.ProductModel.Product;
-import com.example.supera.api.ProductRepository.ProductRepository;
+import com.example.supera.api.exception.TratativaException;
+import com.example.supera.api.model.Product;
+import com.example.supera.api.productRepository.ProductRepository;
 
 @Service
 public class ProdutoService {
-
+	
+	@PersistenceContext
+	private EntityManager em;
+	
 	@Autowired
 	private ProductRepository productRepository;
 
+	/*
 	public List<Product> buscarTodos() throws TratativaException {
 		try {
 			List<Product> lstProduto = new ArrayList<Product>();
@@ -39,7 +44,20 @@ public class ProdutoService {
 		}
 
 	}
-
+	*/
+	
+	public List<Product> buscarTodos() throws TratativaException{
+			return em.createQuery("SELECT e FROM Product e").getResultList();
+	}
+	
+	public List<Product> OrdenarBuscaPornome() throws TratativaException{
+		return em.createQuery("SELECT e FROM Product e  ORDER BY e.name").getResultList();
+	}
+	
+	public List<Product> ordenarPorScore() throws TratativaException{
+		return em.createQuery("SELECT e FROM Product e  ORDER BY e.score").getResultList();
+	}
+	
 	public Product buscarProdutoPorId(Long id) throws TratativaException {
 
 		try {
@@ -59,14 +77,14 @@ public class ProdutoService {
 	}
 
 	
-	public List<Product> ordenandoOrdemAlfabetica() throws TratativaException {
+	public List<Product> ordenandoPorPreco() throws TratativaException {
 
 		List<Product> produtosOrdemAlfabetica = new ArrayList<Product>();
 		Iterable<Product> it = productRepository.findAll();
 		for (Product produto : it) {
 			produtosOrdemAlfabetica.add(produto);
 		}
-		
+	
 		Collections.sort(produtosOrdemAlfabetica);
 
 		return produtosOrdemAlfabetica;

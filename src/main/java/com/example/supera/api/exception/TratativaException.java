@@ -1,4 +1,4 @@
-package com.example.supera.api.Exception;
+package com.example.supera.api.exception;
 
 public class TratativaException extends Exception {
 

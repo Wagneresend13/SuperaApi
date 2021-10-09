@@ -1,4 +1,4 @@
-package com.example.supera.api.Controller;
+package com.example.supera.api.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.supera.api.Constantes.Constantes;
-import com.example.supera.api.Exception.TratativaException;
-import com.example.supera.api.ProductModel.Product;
-import com.example.supera.api.ProductRepository.ProductRepository;
-import com.example.supera.api.Resposta.Resposta;
-import com.example.supera.api.Service.ProdutoService;
+import com.example.supera.api.constants.Constantes;
+import com.example.supera.api.model.Product;
+import com.example.supera.api.productRepository.ProductRepository;
+import com.example.supera.api.resposta.RespostaCarrinho;
+import com.example.supera.api.resposta.Resposta;
+import com.example.supera.api.service.ProdutoService;
 
 @RestController
 @RequestMapping("/CarrinhoController")
@@ -37,7 +37,7 @@ public class CarrinhoController {
 		Resposta resposta = new Resposta();
 
 		try {
-			
+
 			Long id = product.getId();
 
 			if (id == null || id == 0) {
@@ -47,7 +47,7 @@ public class CarrinhoController {
 
 				Product produtoAdicionado = null;
 				for (Product p : carrinho) {
-					if (p.getId() == id) {
+					if (p.getId().equals(id)) {
 						produtoAdicionado = p;
 						break;
 					}
@@ -60,7 +60,8 @@ public class CarrinhoController {
 					carrinho.add(produtoSalvo);
 					resposta.setResposta(carrinho);
 					resposta.setCodigo(Constantes.Status.CÓDIGO_SUCESSO);
-					resposta.setMensagem("Adicionado Produto no Carrinho");
+					resposta.setMensagem("Adicionado Produto no Carrinho ");
+
 				} else {
 					resposta.setCodigo(Constantes.Status.CÓDIGO_ERRO);
 					resposta.setMensagem("Carrinho erro produto já adicionado");
@@ -70,6 +71,7 @@ public class CarrinhoController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			resposta.setCodigo(Constantes.Status.CÓDIGO_ERRO);
+			resposta.setMensagem("Produto não Encontrado");
 		}
 
 		return resposta;
@@ -95,16 +97,23 @@ public class CarrinhoController {
 	}
 
 	@GetMapping
-	public @ResponseBody Resposta consultaTodos() {
+	public @ResponseBody RespostaCarrinho consultaTodos() {
 
-		Resposta resposta = new Resposta();
+		// Resposta resposta = new Resposta();
+
+		RespostaCarrinho resposta = new RespostaCarrinho();
 
 		if (carrinho.isEmpty()) {
 			resposta.setCodigo(Constantes.Status.CÓDIGO_ERRO);
 			resposta.setMensagem("Carrinho Vazio");
 		} else {
+
 			resposta.setCodigo(Constantes.Status.CÓDIGO_SUCESSO);
 			resposta.setResposta(carrinho);
+
+			Double valorFrete = new Double(0);
+			Double valorTotal = new Double(0);
+
 			for (Product p : carrinho) {
 				p.toString();
 			}
@@ -112,15 +121,14 @@ public class CarrinhoController {
 
 		return resposta;
 	}
-	
+
 	@GetMapping("/{limparCarrinho}")
 	public @ResponseBody Resposta limparCarrinho() {
-	
+
 		Resposta resposta = new Resposta();
 		carrinho.clear();
-		
+
 		return resposta;
 	}
-
 
 }

@@ -1,4 +1,4 @@
-package com.example.supera.api.Constantes;
+package com.example.supera.api.constants;
 
 
 public class Constantes {
