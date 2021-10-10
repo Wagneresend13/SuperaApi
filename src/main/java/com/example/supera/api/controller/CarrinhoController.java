@@ -60,8 +60,8 @@ public class CarrinhoController {
 					carrinho.add(produtoSalvo);
 					resposta.setResposta(carrinho);
 					resposta.setCodigo(Constantes.Status.CÓDIGO_SUCESSO);
-					resposta.setMensagem("Adicionado Produto no Carrinho ");
-
+					resposta.setMensagem("Adicionado Produto no Carrinho !");
+					resposta.setMensagamFrete("Valor do Frete : " + this.calculandoFrete());
 				} else {
 					resposta.setCodigo(Constantes.Status.CÓDIGO_ERRO);
 					resposta.setMensagem("Carrinho erro produto já adicionado");
@@ -75,6 +75,33 @@ public class CarrinhoController {
 		}
 
 		return resposta;
+	}
+
+	public Double calculandoFrete() {
+
+		Double valorFrete = this.somaDosPrecos();
+		Double freteSimples = 10d;
+
+		if (valorFrete < 250) {
+
+			return freteSimples * carrinho.size();
+
+		} else {
+
+			return 0.0d;
+		}
+
+	}
+
+	public Double somaDosPrecos() {
+
+		Double valorTemp = 0d;
+
+		for (Product p : carrinho) {
+			valorTemp = valorTemp + p.getPrice();
+		}
+
+		return valorTemp;
 	}
 
 	@RequestMapping("/{id}")
@@ -110,9 +137,6 @@ public class CarrinhoController {
 
 			resposta.setCodigo(Constantes.Status.CÓDIGO_SUCESSO);
 			resposta.setResposta(carrinho);
-
-			Double valorFrete = new Double(0);
-			Double valorTotal = new Double(0);
 
 			for (Product p : carrinho) {
 				p.toString();

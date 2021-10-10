@@ -39,7 +39,7 @@ public class ProdutoService {
 	public List<Product> ordenarPorPrice() throws TratativaException {
 		return em.createQuery("SELECT e FROM Product e  ORDER BY e.price").getResultList();
 	}
-
+	
 	
 	public Product buscarProdutoPorId(Long id) throws TratativaException {
 

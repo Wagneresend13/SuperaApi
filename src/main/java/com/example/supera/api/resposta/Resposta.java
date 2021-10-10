@@ -4,15 +4,16 @@ import com.example.supera.api.constants.Constantes;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-public class Resposta  {
+public class Resposta {
 
 	private Integer codigo;
 
 	@JsonInclude(Include.NON_NULL)
 	private String mensagem;
 	
-	
-	
+	@JsonInclude(Include.NON_NULL)
+	private String mensagamFrete;
+
 	@JsonInclude(Include.NON_NULL)
 	private Object resposta;
 
@@ -45,6 +46,14 @@ public class Resposta  {
 		this.resposta = resposta;
 	}
 
+	public String getMensagamFrete() {
+		return mensagamFrete;
+	}
+
+	public void setMensagamFrete(String mensagamFrete) {
+		this.mensagamFrete = mensagamFrete;
+	}
+	
 	
 	
 	
