@@ -74,7 +74,7 @@ public class ControllerProduct {
 		Resposta resposta = new Resposta();
 		try {
 			resposta.setCodigo(Constantes.Status.CÓDIGO_SUCESSO);
-			resposta.setResposta(produtoService.ordenandoPorPreco());
+			resposta.setResposta(produtoService.ordenarPorPrice());
 		} catch (TratativaException e) {
 			resposta.setCodigo(Constantes.Status.CÓDIGO_ERRO);
 			resposta.setMensagem(e.getMensagem());

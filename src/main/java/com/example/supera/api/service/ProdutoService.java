@@ -17,46 +17,29 @@ import com.example.supera.api.productRepository.ProductRepository;
 
 @Service
 public class ProdutoService {
-	
+
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@Autowired
 	private ProductRepository productRepository;
 
-	/*
 	public List<Product> buscarTodos() throws TratativaException {
-		try {
-			List<Product> lstProduto = new ArrayList<Product>();
-			Iterable<Product> it = productRepository.findAll();
-			for (Product produto : it) {
-				lstProduto.add(produto);
-			}
-			if (lstProduto.isEmpty()) {
-				throw new TratativaException("Produto nenhum Encontrado", null);
-			}
-			return lstProduto;
-		} catch (TratativaException e) {
-			throw e;
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new TratativaException("Produto nenhum encontrado", null);
-		}
+		return em.createQuery("SELECT e FROM Product e").getResultList();
+	}
 
-	}
-	*/
-	
-	public List<Product> buscarTodos() throws TratativaException{
-			return em.createQuery("SELECT e FROM Product e").getResultList();
-	}
-	
-	public List<Product> OrdenarBuscaPornome() throws TratativaException{
+	public List<Product> OrdenarBuscaPornome() throws TratativaException {
 		return em.createQuery("SELECT e FROM Product e  ORDER BY e.name").getResultList();
 	}
-	
-	public List<Product> ordenarPorScore() throws TratativaException{
+
+	public List<Product> ordenarPorScore() throws TratativaException {
 		return em.createQuery("SELECT e FROM Product e  ORDER BY e.score").getResultList();
 	}
+
+	public List<Product> ordenarPorPrice() throws TratativaException {
+		return em.createQuery("SELECT e FROM Product e  ORDER BY e.price").getResultList();
+	}
+
 	
 	public Product buscarProdutoPorId(Long id) throws TratativaException {
 
@@ -74,20 +57,6 @@ public class ProdutoService {
 			e.printStackTrace();
 			throw new TratativaException("Produto Erro COnsulta", null);
 		}
-	}
-
-	
-	public List<Product> ordenandoPorPreco() throws TratativaException {
-
-		List<Product> produtosOrdemAlfabetica = new ArrayList<Product>();
-		Iterable<Product> it = productRepository.findAll();
-		for (Product produto : it) {
-			produtosOrdemAlfabetica.add(produto);
-		}
-	
-		Collections.sort(produtosOrdemAlfabetica);
-
-		return produtosOrdemAlfabetica;
 	}
 
 }
