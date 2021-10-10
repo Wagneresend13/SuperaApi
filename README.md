@@ -100,4 +100,6 @@ git clone https://github.com/Wagneresend13/SuperaApi.git
 
 - Executar o script SQL que se encontra no diretório "sql";
 
-- Executar o mvn springboot:run
+- Executar  ./mvn boot run 
+- Compilar  ./mvn compile 
+- Empacotar ./mvn packge
